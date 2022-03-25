@@ -10,6 +10,8 @@ namespace Percolation
     {
         static void Main(string[] args)
         {
+            PercolationSimulation perco = new PercolationSimulation(3);
+            perco.PercolationValue(3);
         }
     }
 }
