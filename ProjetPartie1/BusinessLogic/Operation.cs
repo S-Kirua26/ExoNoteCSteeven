@@ -15,7 +15,7 @@ namespace CompteBancaire.BusinessLogic
 			Sortie = sortie;
 		}
 
-		public string ResultatOperation(Dictionary<int, double>, List<>)
+		public string ResultatOperation(Dictionary<int, double>, List<Transa>)
         {
 			return "KO";
         }
