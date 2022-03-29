@@ -20,7 +20,6 @@ namespace CompteBancaire.BusinessLogic
 
         public string ResultatOperation(Dictionary<string, double> dicoComptes, List<Transaction> listTransa, string sortie)
         {
-            string affichage = "";
             List<string> listeDoublon = new List<string>();
 
             Console.WriteLine($"Voici la liste des comptes :");
@@ -31,25 +30,6 @@ namespace CompteBancaire.BusinessLogic
 
             foreach (Transaction transaction in listTransa)
             {
-                //for (int i = 0; i < listTransa.Count; i++)
-                //{
-                //    if (listTransa[i].IdTransaction == transaction.IdTransaction)
-                //    {
-                //        affichage = transaction.IdTransaction + " :KO";
-                //        listeEtat.Add(affichage);
-                //        Console.WriteLine($"La transcation {transaction.IdTransaction} est en double");
-                //    }
-                //}
-                //for (int i = 1; i < listeDoublon.Count; i++)
-                //{
-                //    if (listeDoublon[i] == transaction.IdTransaction)
-                //    {
-                //        affichage = transaction.IdTransaction + " :KO";
-                //        listeEtat.Add(affichage);
-                //        Console.WriteLine($"La transaction {transaction.IdTransaction} est en double");
-                //    }
-                //}
-
                 if (!listeDoublon.Any(id => id.Equals(transaction.IdTransaction)))
                 {
                     if (transaction.Montant < 0)
@@ -129,11 +109,5 @@ namespace CompteBancaire.BusinessLogic
             }
             return "KO";
         }
-
-        //private string Ecriture(string affichage, string sortie)
-        //{
-
-        //    return "OK";
-        //}
     }
 }
