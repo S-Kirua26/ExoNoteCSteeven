@@ -10,23 +10,21 @@ namespace CompteBancaire.BusinessLogic
     class Operation
     {
         public string Sortie { get; set; }
-
+        public List<string> listeEtat;
         public Operation(string sortie)
         {
             Sortie = sortie;
+            listeEtat = new List<string>();
         }
 
         public string ResultatOperation(Dictionary<string, double> dicoComptes, List<Transaction> listTransa, string sortie)
         {
-            //foreach (var item in dicoComptes)
-            //{
-            //    Console.WriteLine($"Voici la liste des comptes : {item.Key} _ {item.Value}");
-            //}
+            string affichage = "";
 
-            //foreach (var item in listTransa)
-            //{
-            //    Console.WriteLine($"Voici la liste des transactions : {item.IdTransaction} - {item.Montant} - {item.Expediteur} - {item.Destinataire}");
-            //}
+            foreach (var item in dicoComptes)
+            {
+                Console.WriteLine($"Voici la liste des comptes : {item.Key} _ {item.Value}");
+            }
 
             foreach (Transaction transaction in listTransa)
             {
@@ -36,62 +34,83 @@ namespace CompteBancaire.BusinessLogic
                 }
                 else if (transaction.Expediteur == "0" && transaction.Destinataire != "0")
                 {
-                    if (dicoComptes.ContainsKey(transaction.Destinataire))
+                    if (dicoComptes.ContainsKey(transaction.Destinataire)) // si le compte existe dans le dictionnaire de comptes
                     {
                         //double newSolde = dicoComptes[transaction.Destinataire] + transaction.Montant;
                         //dicoComptes[transaction.Destinataire] = newSolde;
                         dicoComptes[transaction.Destinataire] += transaction.Montant;
-                        Console.WriteLine($"Ajout sur le compte réussi");
+                        Console.WriteLine($"Format 0-1 : Ajout sur le compte réussi");
+                        affichage = "OK";
+                        listeEtat.Add(affichage);
+                    }
+                    else
+                    {
+                        affichage = "KO";
+                        listeEtat.Add(affichage);
                     }
                 }
                 else if (transaction.Expediteur != "0" && transaction.Destinataire == "0")
                 {
-                    if (dicoComptes.ContainsKey(transaction.Expediteur))
+                    if (dicoComptes.ContainsKey(transaction.Expediteur)) 
                     {
                         dicoComptes[transaction.Expediteur] -= transaction.Montant;
-                        Console.WriteLine($"retrait sur le compte réussi");
+                        Console.WriteLine($"Format 1-0 : Retrait sur le compte réussi");
+                        affichage = "OK";
+                        listeEtat.Add(affichage);
+                    }
+                    else
+                    {
+                        affichage = "KO";
+                        listeEtat.Add(affichage);
                     }
                 }
-                //else if (transaction.Expediteur != "0" && transaction.Destinataire != "0")
-                //{
-                //    foreach (var compte in dicoComptes)
-                //    {
-                //        if (compte.Key == transaction.Expediteur)
-                //        {
-                //            if (transaction.Montant > compte.Value)
-                //            {
-                //                return "KO";
-                //            }
-                //            double newSolde = compte.Value - transaction.Montant;
-                //            //dicoComptes[compte.Key] = newSolde;
-                //            Console.WriteLine($"Retrait sur le compte réussi");
+                else if (transaction.Expediteur != "0" && transaction.Destinataire != "0")
+                {
+                    if (dicoComptes.ContainsKey(transaction.Destinataire) && dicoComptes.ContainsKey(transaction.Expediteur))
+                    {
+                        if(dicoComptes[transaction.Expediteur] >= transaction.Montant)
+                        {
+                            dicoComptes[transaction.Destinataire] += transaction.Montant;
+                            dicoComptes[transaction.Expediteur] -= transaction.Montant;
+                            Console.WriteLine($"Format 1-1 : Ajout et retrait sur les comptes réussi");
+                            affichage = "OK";
+                            listeEtat.Add(affichage);
+                        }
+                        else
+                        {
+                            affichage = "KO";
+                            listeEtat.Add(affichage);
+                        }
+                    }
+                    else
+                    {
+                        affichage = "KO";
+                        listeEtat.Add(affichage);
+                    }
+                }
 
-                //        }
-                //    }
-
-                //    foreach (var compte in dicoComptes)
-                //    {
-                //        if (compte.Key == transaction.Destinataire)
-                //        {
-                //            double newSolde = compte.Value + transaction.Montant;
-                //            //dicoComptes[compte.Key] = newSolde;
-                //            Console.WriteLine($"Ajout sur le compte réussi");
-                //        }
-                //    }
-                //    return "KO";
-                //}
             }
 
+
+            using (StreamWriter ficSortie = new StreamWriter(sortie))
+            {
+                foreach (var etat in listeEtat)
+                {
+                    ficSortie.WriteLine(etat);
+                }              
+            }
+
+            foreach (var item in dicoComptes)
+            {
+                Console.WriteLine($"Voici la liste des comptes : {item.Key} _ {item.Value}");
+            }
             return "KO";
         }
 
-        public string Ecriture(string affichage, string sortie)
-        {
-            using (StreamWriter ficSortie = new StreamWriter(sortie))
-            {
-                //sortie.WriteLine(affichage);
-            }
-            return "OK";
-        }
+        //private string Ecriture(string affichage, string sortie)
+        //{
+
+        //    return "OK";
+        //}
     }
 }
