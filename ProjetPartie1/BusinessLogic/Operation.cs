@@ -28,7 +28,7 @@ namespace CompteBancaire.BusinessLogic
 
             foreach (Transaction transaction in listTransa)
             {
-                if (transaction.Montant < 0)
+                if (transaction.Montant < 0 || )
                 {
                     affichage = transaction.IdTransaction + " :KO";
                     listeEtat.Add(affichage);
@@ -87,6 +87,13 @@ namespace CompteBancaire.BusinessLogic
                     {
                         affichage = transaction.IdTransaction + " :KO";
                         listeEtat.Add(affichage);
+                    }
+                }
+                for (int i = 0; i < listTransa.Count; i++)
+                {
+                    if (listTransa[i].IdTransaction = transaction.IdTransaction)
+                    {
+                        Console.WriteLine("ça marche pas");
                     }
                 }
             }
