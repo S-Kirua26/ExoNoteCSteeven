@@ -30,7 +30,8 @@ namespace CompteBancaire.BusinessLogic
             {
                 if (transaction.Montant < 0)
                 {
-                    return "KO";
+                    affichage = "KO";
+                    listeEtat.Add(affichage);
                 }
                 else if (transaction.Expediteur == "0" && transaction.Destinataire != "0")
                 {

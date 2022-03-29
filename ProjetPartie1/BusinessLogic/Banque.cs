@@ -33,7 +33,6 @@ namespace CompteBancaire
 			{
 				while (!lecture.EndOfStream)
 				{
-
 					string line = lecture.ReadLine();
 
 					string[] tableauLine = line.Split(';');
@@ -46,8 +45,10 @@ namespace CompteBancaire
 					double doubleS;
 					double.TryParse(solde, out doubleS);
 
-					_listeComptes.Add(tableauLine[0], doubleS);
-
+					if(!_listeComptes.ContainsKey(tableauLine[0])) // si le compte auquel on veut ajouter ne se trouve pas dans le dictionnaire de comptes, on rempli le dictionnaire
+                    {
+						_listeComptes.Add(tableauLine[0], doubleS);
+					}
 				}
                 //foreach (var item in _listeComptes)
                 //{
