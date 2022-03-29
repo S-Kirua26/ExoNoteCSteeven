@@ -28,6 +28,15 @@ namespace CompteBancaire.BusinessLogic
 
             foreach (Transaction transaction in listTransa)
             {
+                //for (int i = 0; i < listTransa.Count; i++)
+                //{
+                //    if (listTransa[i].IdTransaction == transaction.IdTransaction)
+                //    {
+                //        affichage = transaction.IdTransaction + " :KO";
+                //        listeEtat.Add(affichage);
+                //        Console.WriteLine($"La transcation {transaction.IdTransaction} est en double");
+                //    }
+                //}
                 if (transaction.Montant < 0)
                 {
                     affichage = transaction.IdTransaction + " :KO";
@@ -89,14 +98,7 @@ namespace CompteBancaire.BusinessLogic
                         listeEtat.Add(affichage);
                     }
                 }
-                //for (int i = 0; i < listTransa.Count; i++)
-                //{
-                //    if (listTransa[i].IdTransaction == transaction.IdTransaction)
-                //    {
-                //        affichage = transaction.IdTransaction + " :KO";
-                //        listeEtat.Add(affichage);
-                //    }
-                //}
+                
             }
 
 
