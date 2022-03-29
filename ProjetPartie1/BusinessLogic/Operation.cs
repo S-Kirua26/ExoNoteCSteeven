@@ -30,7 +30,7 @@ namespace CompteBancaire.BusinessLogic
             {
                 if (transaction.Montant < 0)
                 {
-                    affichage = "KO";
+                    affichage = transaction.IdTransaction + " :KO";
                     listeEtat.Add(affichage);
                 }
                 else if (transaction.Expediteur == "0" && transaction.Destinataire != "0")
@@ -41,12 +41,12 @@ namespace CompteBancaire.BusinessLogic
                         //dicoComptes[transaction.Destinataire] = newSolde;
                         dicoComptes[transaction.Destinataire] += transaction.Montant;
                         Console.WriteLine($"Format 0-1 : Ajout sur le compte réussi");
-                        affichage = "OK";
+                        affichage = transaction.IdTransaction + " :OK";
                         listeEtat.Add(affichage);
                     }
                     else
                     {
-                        affichage = "KO";
+                        affichage = transaction.IdTransaction + " :KO";
                         listeEtat.Add(affichage);
                     }
                 }
@@ -56,12 +56,12 @@ namespace CompteBancaire.BusinessLogic
                     {
                         dicoComptes[transaction.Expediteur] -= transaction.Montant;
                         Console.WriteLine($"Format 1-0 : Retrait sur le compte réussi");
-                        affichage = "OK";
+                        affichage = transaction.IdTransaction + " :OK";
                         listeEtat.Add(affichage);
                     }
                     else
                     {
-                        affichage = "KO";
+                        affichage = transaction.IdTransaction + " :KO";
                         listeEtat.Add(affichage);
                     }
                 }
@@ -74,22 +74,21 @@ namespace CompteBancaire.BusinessLogic
                             dicoComptes[transaction.Destinataire] += transaction.Montant;
                             dicoComptes[transaction.Expediteur] -= transaction.Montant;
                             Console.WriteLine($"Format 1-1 : Ajout et retrait sur les comptes réussi");
-                            affichage = "OK";
+                            affichage = transaction.IdTransaction + " :OK";
                             listeEtat.Add(affichage);
                         }
                         else
                         {
-                            affichage = "KO";
+                            affichage = transaction.IdTransaction + " :KO";
                             listeEtat.Add(affichage);
                         }
                     }
                     else
                     {
-                        affichage = "KO";
+                        affichage = transaction.IdTransaction + " :KO";
                         listeEtat.Add(affichage);
                     }
                 }
-
             }
 
 
