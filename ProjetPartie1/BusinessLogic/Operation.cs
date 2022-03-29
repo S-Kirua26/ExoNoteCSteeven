@@ -32,7 +32,7 @@ namespace CompteBancaire.BusinessLogic
             {
                 if (!listeDoublon.Any(id => id.Equals(transaction.IdTransaction)))
                 {
-                    if (transaction.Montant < 0)
+                    if (transaction.Montant <= 0)
                     {
                         listeEtat.Add(transaction.IdTransaction + ";KO");
                     }
