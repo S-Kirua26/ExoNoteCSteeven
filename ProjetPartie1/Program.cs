@@ -1,4 +1,5 @@
 ﻿//using CompteBancaire;
+using CompteBancaire.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,12 +20,12 @@ namespace CompteBancaire
 
 
             Banque banque = new Banque();
-            banque.ComptesTransaction(acctPath, trxnPath);
-
+            //banque.ComptesTransaction(acctPath);
             Transaction transaction = new Transaction("1", 100, "2", "3");
-            transaction.ChoixTransaction(trxnPath);
+            //transaction.ChoixTransaction(trxnPath);
 
-
+            Operation operation = new Operation("test");
+            operation.ResultatOperation(banque.ComptesTransaction(acctPath), transaction.ChoixTransaction(trxnPath), sttsPath);
 
 
             // Keep the console window open

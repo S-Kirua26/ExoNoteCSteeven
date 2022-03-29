@@ -19,14 +19,14 @@ namespace CompteBancaire
 		/// <summary>
 		/// Dictionnaire des comptes
 		/// </summary>
-		public Dictionary<int, double> _listeComptes;
+		public Dictionary<string, double> _listeComptes;
 
         public Banque()
         {
-			_listeComptes = new Dictionary<int, double>();
+			_listeComptes = new Dictionary<string, double>();
         }
 
-		public Dictionary<int, double> ComptesTransaction(string ficComptes, string ficTransaction)
+		public Dictionary<string, double> ComptesTransaction(string ficComptes)
 		{
 
 			using (StreamReader lecture = new StreamReader(ficComptes))
@@ -38,22 +38,22 @@ namespace CompteBancaire
 
 					string[] tableauLine = line.Split(';');
 
-					string idCompte = tableauLine[0];
-					int intCompte;
-					int.TryParse(idCompte, out intCompte);
+					//string idCompte = tableauLine[0];
+					//int intCompte;
+					//int.TryParse(idCompte, out intCompte);
 
 					string solde = tableauLine[1].Replace('.', ',');
 					double doubleS;
 					double.TryParse(solde, out doubleS);
 
-					_listeComptes.Add(intCompte, doubleS);
+					_listeComptes.Add(tableauLine[0], doubleS);
 
 				}
-				//foreach (var item in _listeComptes)
-				//{
-				//	Console.WriteLine($"Voici la liste des transactions : {item.Key} _ {item.Value}");
-				//}
-				return _listeComptes;
+                //foreach (var item in _listeComptes)
+                //{
+                //    Console.WriteLine($"Voici la liste des comptes : {item.Key} _ {item.Value}");
+                //}
+                return _listeComptes;
 			}
 		}
     }
