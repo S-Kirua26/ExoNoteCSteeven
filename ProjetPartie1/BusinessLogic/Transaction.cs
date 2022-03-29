@@ -35,6 +35,7 @@ namespace CompteBancaire
 					//Console.WriteLine(line);
 					string[] tableauLine2 = line.Split(';');
 
+					
 					Transaction transaction = new Transaction(tableauLine2[0], double.Parse(tableauLine2[1]), tableauLine2[2], tableauLine2[3]);
 					listeTransaction.Add(transaction);
 				}
