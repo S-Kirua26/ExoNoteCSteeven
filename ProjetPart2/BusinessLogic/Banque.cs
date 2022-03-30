@@ -60,7 +60,13 @@ namespace ProjetPart2
                         Expediteur = tableauLine[3],
                         Destinataire = tableauLine[4],
                         Type = "1"
-                    }); 
+                    });
+                  
+                    //if(!_listeComptes.ContainsKey(tableauLine[0]))
+                    //{
+                    //    Compte compte = new Compte(tableauLine[0],newDate,solde,tableauLine[3],tableauLine[4]);
+                    //    _listeComptes.Add(tableauLine[0], compte);
+                    //}
                 }
             }
 
@@ -91,10 +97,17 @@ namespace ProjetPart2
             }
             _listeLigne = _listeLigne.OrderBy(x => x.Date).ToList();
 
-            Console.WriteLine("------------------------------------------------------------------");
+            
             foreach (var element in _listeLigne)
             {
                 Console.WriteLine($"ligne : Id:{element.Id} - Date:{element.Date} - Solde:{element.Solde} - Expediteur:{element.Expediteur} - Destinataire:{element.Destinataire} - Type:{element.Type}");
+            }
+
+            Console.WriteLine("------------------------------------------------------------------");
+
+            foreach (var ligne in _listeComptes)
+            {
+                Console.WriteLine($"Dictionnaire de comptes : Id:{ligne.Key}");
             }
             return _listeLigne;
         }

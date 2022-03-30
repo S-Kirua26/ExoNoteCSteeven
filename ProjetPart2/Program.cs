@@ -23,7 +23,10 @@ namespace ProjetPart2
 
             // Implémentation
             Banque banque = new Banque();
-            banque.ComptesTransaction(acctPath, trxnPath);
+            var date1 = new DateTime(2008, 5, 1);
+            Compte compte = new Compte("", date1, 100,"","");
+            compte.Comptes(banque.ComptesTransaction(acctPath, trxnPath));
+
             Gestionnaire gestionnaire = new Gestionnaire("","",0);
             gestionnaire.GestionComptes(mngrPath);
 
