@@ -20,11 +20,9 @@ namespace CompteBancaire
 
 
             Banque banque = new Banque();
-            //banque.ComptesTransaction(acctPath);
-            Transaction transaction = new Transaction("1", 100, "2", "3");
-            //transaction.ChoixTransaction(trxnPath);
+            Transaction transaction = new Transaction("", 100, "", "");
 
-            Operation operation = new Operation("test");
+            Operation operation = new Operation("");
             operation.ResultatOperation(banque.ComptesTransaction(acctPath), transaction.ChoixTransaction(trxnPath), sttsPath);
 
 

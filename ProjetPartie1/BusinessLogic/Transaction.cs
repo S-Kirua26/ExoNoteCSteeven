@@ -32,17 +32,12 @@ namespace CompteBancaire
 				while (!lectureTran.EndOfStream)
 				{
 					string line = lectureTran.ReadLine();
-					//Console.WriteLine(line);
 					string[] tableauLine2 = line.Split(';');
 
 					
 					Transaction transaction = new Transaction(tableauLine2[0], double.Parse(tableauLine2[1]), tableauLine2[2], tableauLine2[3]);
 					listeTransaction.Add(transaction);
 				}
-                //foreach (var item in listeTransaction)
-                //{
-                //    Console.WriteLine($"Voici la liste des transactions : {item.IdTransaction} - {item.Montant} - {item.Expediteur} - {item.Destinataire}");
-                //}
                 return listeTransaction;
                
             }

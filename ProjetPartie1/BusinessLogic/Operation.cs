@@ -30,7 +30,7 @@ namespace CompteBancaire.BusinessLogic
 
             foreach (Transaction transaction in listTransa)
             {
-                if (!listeDoublon.Any(id => id.Equals(transaction.IdTransaction)))
+                if (!listeDoublon.Any(id => id.Equals(transaction.IdTransaction))) // si un identifiant de transaction se trouve déjà dans ma liste de doublons
                 {
                     if (transaction.Montant <= 0)
                     {
@@ -66,9 +66,9 @@ namespace CompteBancaire.BusinessLogic
                     }
                     else if (transaction.Expediteur != "0" && transaction.Destinataire != "0")
                     {
-                        if (dicoComptes.ContainsKey(transaction.Destinataire) && dicoComptes.ContainsKey(transaction.Expediteur))
+                        if (dicoComptes.ContainsKey(transaction.Destinataire) && dicoComptes.ContainsKey(transaction.Expediteur)) // si l'identifiant du destinataire et de l'expediteur se trouve dans le dictionnaire
                         {
-                            if (dicoComptes[transaction.Expediteur] >= transaction.Montant)
+                            if (dicoComptes[transaction.Expediteur] >= transaction.Montant) // si le solde de l'expediteur est superieiur au montant
                             {
                                 dicoComptes[transaction.Destinataire] += transaction.Montant;
                                 dicoComptes[transaction.Expediteur] -= transaction.Montant;

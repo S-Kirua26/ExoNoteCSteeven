@@ -37,10 +37,6 @@ namespace CompteBancaire
 
                     string[] tableauLine = line.Split(';');
 
-                    //string idCompte = tableauLine[0];
-                    //int intCompte;
-                    //int.TryParse(idCompte, out intCompte);
-
                     double solde;
                     double.TryParse(tableauLine[1].Replace('.', ','), out solde);
 
@@ -49,10 +45,6 @@ namespace CompteBancaire
                         _listeComptes.Add(tableauLine[0], solde);
                     }
                 }
-                //foreach (var item in _listeComptes)
-                //{
-                //    Console.WriteLine($"Voici la liste des comptes : {item.Key} _ {item.Value}");
-                //}
                 return _listeComptes;
             }
         }
