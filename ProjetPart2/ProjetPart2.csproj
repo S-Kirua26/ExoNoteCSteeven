@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\Banque.cs" />
+    <Compile Include="BusinessLogic\OperationGestion.cs" />
+    <Compile Include="BusinessLogic\Transaction.cs" />
     <Compile Include="BusinessLogic\Gestionnaire.cs" />
     <Compile Include="BusinessLogic\Compte.cs" />
     <Compile Include="BusinessLogic\LigneFichier.cs" />

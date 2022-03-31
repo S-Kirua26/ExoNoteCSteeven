@@ -23,12 +23,18 @@ namespace ProjetPart2
 
             // Implémentation
             Banque banque = new Banque();
-            var date1 = new DateTime(2008, 5, 1);
-            Compte compte = new Compte("", date1, 100,"","");
-            compte.Comptes(banque.ComptesTransaction(acctPath, trxnPath));
+            banque.LireGestionnaires(mngrPath);
+            banque.LireComptesTransaction(acctPath, trxnPath);
+            banque.TraiterComptesTransaction();
 
-            Gestionnaire gestionnaire = new Gestionnaire("","",0);
-            gestionnaire.GestionComptes(mngrPath);
+            var date1 = new DateTime(2008, 5, 1);
+
+            Compte compte = new Compte("", date1, 100, "");
+            Transaction transaction = new Transaction("", date1, 0, "", "");
+            Gestionnaire gestionnaire = new Gestionnaire("", "", 0);
+
+            //OperationGestion operation = new OperationGestion("");
+            //operation.ResultatOperation(compte.Comptes(acctPath), transaction.ChoixTransaction(trxnPath), gestionnaire.GestionComptes(mngrPath), banque.LireComptesTransaction(acctPath, trxnPath), sttsAcctPath);
 
             // Keep the console window open
             Console.WriteLine("Press any key to exit.");
