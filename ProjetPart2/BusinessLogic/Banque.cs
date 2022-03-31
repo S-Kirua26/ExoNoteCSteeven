@@ -99,8 +99,10 @@ namespace ProjetPart2
                     {
                         if (_listeGestionnaires.ContainsKey(ligne.Expediteur) && _listeGestionnaires.ContainsKey(ligne.Destinataire))
                         {
-                            Console.WriteLine($"Le type de gestionnaire est identique");
-
+                            Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
+                            ligne.Expediteur = ligne.Destinataire;
+                            Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
+                            _listEtat.Add($"{ligne.Id};OK");
                         }
                     }
                     //else if (string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cloturation de compte
