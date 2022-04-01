@@ -22,7 +22,8 @@ namespace ProjetPart2
         private Dictionary<string, Compte> _listeComptes;
         private List<Transaction> _listeTransactions;
         private List<LigneFichier> _listeLigne;
-        private List<string> _listEtat;
+        private List<string> _listEtatCompte;
+        private List<string> _listEtatTransaction;
 
         //public Transaction(string idCompte, double dateCrea, string solde, string destinataire)
         //{
@@ -38,11 +39,18 @@ namespace ProjetPart2
             _listeGestionnaires = new Dictionary<string, Gestionnaire>();
             _listeComptes = new Dictionary<string, Compte>();
             _listeLigne = new List<LigneFichier>();
-            _listEtat = new List<string>();
+            _listEtatCompte = new List<string>();
+            _listEtatTransaction = new List<string>();
         }
 
-        internal void TraiterComptesTransaction(string sortie)
+        internal void TraiterComptesTransaction(string sortieCompte, string sortieTransa)
         {
+            foreach (var gestionnaire in _listeGestionnaires)
+            {
+                
+            }
+            bool verifCessVal = false;
+            bool verifCessInv = false;
             //foreach (LigneFichier ligne in _listeLigne)
             //{
             //    //TODO: Vérifier SI Opération
@@ -71,7 +79,7 @@ namespace ProjetPart2
                                 Console.WriteLine(ligne.Id + "Compte créé");
                                 Compte c = new Compte(ligne.Id, ligne.Date, ligne.Solde, gstn.Value.IdGestion);
                                 _listeComptes.Add(ligne.Id,c);
-                                _listEtat.Add($"{ligne.Id};OK");
+                                _listEtatCompte.Add($"{ligne.Id};OK");
                                 break;
                             }
                         }
@@ -89,11 +97,21 @@ namespace ProjetPart2
                                         element.Value.DateClo = ligne.Date;
                                         //ListCompte.Remove(element);
                                         Console.WriteLine($"{element.Value.DateClo} - {ligne.Date}");
-                                        _listEtat.Add($"{ligne.Id};OK");
-                                    }                                  
+                                        verifCessVal = true;
+                                        _listEtatCompte.Add($"{ligne.Id};OK");
+                                    }
+                                    else
+                                    {
+                                        verifCessInv = true;
+                                    }
                                 }
+                                if (verifCessVal == false && verifCessInv == true)
+                                {
+                                    _listEtatCompte.Add($"{ligne.Id};KO");
+                                }
+                                verifCessVal = false;
+                                verifCessInv = false;
                             }
-
                         }
                     }
                     else if (!string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cession de compte
@@ -107,28 +125,51 @@ namespace ProjetPart2
                                     Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
                                     ligne.Expediteur = ligne.Destinataire;
                                     Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
-                                    _listEtat.Add($"{ligne.Id};OK");
+                                    verifCessVal = true;
+                                    _listEtatCompte.Add($"{ligne.Id};OK");
+                                }
+                                else
+                                {
+                                    verifCessInv = true;
                                 }
                             }
-                            _listEtat.Add($"{ligne.Id};KO"); 
+                            if(verifCessVal == false && verifCessInv == true)
+                            {
+                                _listEtatCompte.Add($"{ligne.Id};KO");
+                            }
+                            verifCessVal = false;
+                            verifCessInv = false;
                         }
                     }
                     else
                     {
                         Console.WriteLine(ligne.Id + "compte erroné");
-                        _listEtat.Add($"{ligne.Id};KO");
+                        _listEtatCompte.Add($"{ligne.Id};KO");
                     }
+                }
+                else
+                {
+                    Console.WriteLine(ligne.Id + "transaction erroné");
+                    _listEtatTransaction.Add($"{ligne.Id};KO");
                 }
             }
 
-            foreach (var item in _listeComptes)
+            //foreach (var item in _listeComptes)
+            //{
+            //    Console.WriteLine($"Id:{item.Value.Id} - DateOuv{item.Value.DateOuv} - DateClose{item.Value.DateClo} - Solde{item.Value.Solde} - IdGestion{item.Value.IdGestionnaire}");
+            //}
+
+            using (StreamWriter ficSortie = new StreamWriter(sortieCompte))
             {
-                Console.WriteLine($"Id:{item.Value.Id} - DateOuv{item.Value.DateOuv} - DateClose{item.Value.DateClo} - Solde{item.Value.Solde} - IdGestion{item.Value.IdGestionnaire}");
+                foreach (var etat in _listEtatCompte)
+                {
+                    ficSortie.WriteLine(etat);
+                }
             }
 
-            using (StreamWriter ficSortie = new StreamWriter(sortie))
+            using (StreamWriter ficSortie = new StreamWriter(sortieTransa))
             {
-                foreach (var etat in _listEtat)
+                foreach (var etat in _listEtatTransaction)
                 {
                     ficSortie.WriteLine(etat);
                 }
