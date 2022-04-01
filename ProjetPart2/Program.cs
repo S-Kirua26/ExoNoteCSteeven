@@ -25,7 +25,7 @@ namespace ProjetPart2
             Banque banque = new Banque();
             banque.LireGestionnaires(mngrPath);
             banque.LireComptesTransaction(acctPath, trxnPath);
-            banque.TraiterComptesTransaction();
+            banque.TraiterComptesTransaction(sttsAcctPath);
 
             var date1 = new DateTime(2008, 5, 1);
 

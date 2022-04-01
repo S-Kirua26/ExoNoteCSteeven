@@ -41,7 +41,7 @@ namespace ProjetPart2
             _listEtat = new List<string>();
         }
 
-        internal void TraiterComptesTransaction()
+        internal void TraiterComptesTransaction(string sortie)
         {
             //foreach (LigneFichier ligne in _listeLigne)
             //{
@@ -76,7 +76,7 @@ namespace ProjetPart2
                             }
                         }
                     }
-                    else if (string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cloturation de compte
+                    else if (string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cloture de compte
                     {
                         foreach (var g in _listeGestionnaires)
                         {
@@ -84,37 +84,35 @@ namespace ProjetPart2
                             {
                                 foreach (var element in _listeComptes)
                                 {
-                                    if (element.Key == ligne.Destinataire)
+                                    if(element.Key == ligne.Id && element.Value.IdGestionnaire == ligne.Destinataire)
                                     {
                                         element.Value.DateClo = ligne.Date;
                                         //ListCompte.Remove(element);
                                         Console.WriteLine($"{element.Value.DateClo} - {ligne.Date}");
-                                    }
+                                        _listEtat.Add($"{ligne.Id};OK");
+                                    }                                  
                                 }
                             }
 
                         }
                     }
-                    else if (!string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0)
+                    else if (!string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cession de compte
                     {
                         if (_listeGestionnaires.ContainsKey(ligne.Expediteur) && _listeGestionnaires.ContainsKey(ligne.Destinataire))
                         {
-                            Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
-                            ligne.Expediteur = ligne.Destinataire;
-                            Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
-                            _listEtat.Add($"{ligne.Id};OK");
+                            foreach (var c in _listeComptes)
+                            {
+                                if(c.Key == ligne.Id && c.Value.IdGestionnaire == ligne.Expediteur)
+                                {
+                                    Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
+                                    ligne.Expediteur = ligne.Destinataire;
+                                    Console.WriteLine($"{ligne.Id} - Entree:{ligne.Expediteur} Compte cessionner");
+                                    _listEtat.Add($"{ligne.Id};OK");
+                                }
+                            }
+                            _listEtat.Add($"{ligne.Id};KO");
                         }
                     }
-                    //else if (string.IsNullOrEmpty(ligne.Expediteur) && !string.IsNullOrEmpty(ligne.Destinataire) && ligne.Solde >= 0) // Cloturation de compte
-                    //{
-                    //    foreach (var element in ListCompte)
-                    //    {
-                    //        if (element.Id == ligne.Id)
-                    //        {
-
-                    //        }
-                    //    }
-                    //}
                     else
                     {
                         Console.WriteLine(ligne.Id + "compte erroné");
@@ -126,6 +124,14 @@ namespace ProjetPart2
             foreach (var item in _listeComptes)
             {
                 Console.WriteLine($"Id:{item.Value.Id} - DateOuv{item.Value.DateOuv} - DateClose{item.Value.DateClo} - Solde{item.Value.Solde} - IdGestion{item.Value.IdGestionnaire}");
+            }
+
+            using (StreamWriter ficSortie = new StreamWriter(sortie))
+            {
+                foreach (var etat in _listEtat)
+                {
+                    ficSortie.WriteLine(etat);
+                }
             }
         }
         public void LireGestionnaires(string ficGestion)
