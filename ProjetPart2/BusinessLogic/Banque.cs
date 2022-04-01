@@ -110,7 +110,7 @@ namespace ProjetPart2
                                     _listEtat.Add($"{ligne.Id};OK");
                                 }
                             }
-                            _listEtat.Add($"{ligne.Id};KO");
+                            _listEtat.Add($"{ligne.Id};KO"); 
                         }
                     }
                     else
